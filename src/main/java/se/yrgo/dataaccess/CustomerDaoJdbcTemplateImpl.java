@@ -1,24 +1,29 @@
 package se.yrgo.dataaccess;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import se.yrgo.domain.Call;
 import se.yrgo.domain.Customer;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Repository
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     private JdbcTemplate template;
 
+    @Autowired
     public CustomerDaoJdbcTemplateImpl(JdbcTemplate template) {
         this.template = template;
     }
 
-    // 🔥 Skapa tabeller
+    @PostConstruct
     public void createTables() {
         try {
             template.update("""
@@ -123,8 +128,6 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
         return customer;
     }
-
-    // 🔹 Mapper classes
 
     private static class CustomerMapper implements RowMapper<Customer> {
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {

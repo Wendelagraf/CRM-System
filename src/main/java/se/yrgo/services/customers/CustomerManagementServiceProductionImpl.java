@@ -1,5 +1,8 @@
 package se.yrgo.services.customers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.CustomerDao;
 import se.yrgo.dataaccess.RecordNotFoundException;
 import se.yrgo.domain.Call;
@@ -7,10 +10,13 @@ import se.yrgo.domain.Customer;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
     private CustomerDao customerDao;
 
+    @Autowired
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }

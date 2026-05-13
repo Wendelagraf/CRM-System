@@ -2,7 +2,6 @@ package se.yrgo.client;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import se.yrgo.dataaccess.CustomerDaoJdbcTemplateImpl;
 import se.yrgo.domain.Customer;
 import se.yrgo.services.customers.CustomerManagementService;
 
@@ -10,21 +9,21 @@ public class SimpleClient {
 
     public static void main(String[] args) {
 
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext("application.xml");
+        try {
+            ApplicationContext context =
 
-        CustomerDaoJdbcTemplateImpl dao =
-                context.getBean("customerDao", CustomerDaoJdbcTemplateImpl.class);
+                    new ClassPathXmlApplicationContext("application.xml");
 
+            CustomerManagementService service =
+                    context.getBean(CustomerManagementService.class);
 
-        dao.createTables();
+            Customer c1 = new Customer("C1", "Test AB", "notes");
+            service.newCustomer(c1);
 
-        CustomerManagementService service =
-                context.getBean("customerService", CustomerManagementService.class);
+            service.getAllCustomers().forEach(System.out::println);
 
-        Customer c1 = new Customer("C1", "Test AB", "notes");
-        service.newCustomer(c1);
-
-        service.getAllCustomers().forEach(System.out::println);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
