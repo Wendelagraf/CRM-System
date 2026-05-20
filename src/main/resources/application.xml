@@ -37,6 +37,6 @@
 
     <aop:aspectj-autoproxy/>
 
-    <bean class="se.yrgo.advice.PerformanceTimingAdvice"/>
+
 
 </beans>
